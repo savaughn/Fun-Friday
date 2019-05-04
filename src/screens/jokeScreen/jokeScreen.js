@@ -3,7 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { connect } from 'react-redux';
 import {GET_RANDOM_JOKE} from "../../state/ActionTypes";
 
-class Dashboard extends Component {
+class JokeScreen extends Component {
   constructor(props) {
     super(props);
   }
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(JokeScreen);

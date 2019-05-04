@@ -18,10 +18,6 @@ type Props = {};
 export default class App extends Component<Props> {
   constructor(props){
       super();
-      this.state = {
-          setup: '',
-          punchline: ''
-      };
   }
 
   render() {

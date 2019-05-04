@@ -1,4 +1,4 @@
-import { GET_RANDOM_JOKE, GOT_RANDOM_JOKE, GET_RANDOM_JOKE_FAILURE } from '../../ActionTypes';
+import { GET_RANDOM_JOKE, GET_RANDOM_JOKE_SUCCESS, GET_RANDOM_JOKE_FAILURE } from '../../ActionTypes';
 
 export const INITIAL_STATE = {
     setup: '',
@@ -12,7 +12,7 @@ export default (state = INITIAL_STATE, action) => {
             console.log('reducer');
             return {...state};
         }
-        case GOT_RANDOM_JOKE:
+        case GET_RANDOM_JOKE_SUCCESS:
             return { ...state, setup: action.payload.setup, punchline: action.payload.punchline, error: false };
         case GET_RANDOM_JOKE_FAILURE:
             return { ...state, error: true };
