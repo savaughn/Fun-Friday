@@ -7,3 +7,8 @@ export const GET_RANDOM_JOKE_FAILURE = 'get_random_joke_failure';
 export const GET_HISTORY_FACT = 'get_history_fact';
 export const GET_HISTORY_FACT_SUCCESS = 'get_history_fact_success';
 export const GET_HISTORY_FACT_FAILURE = 'get_history_fact_failure';
+
+// Trivia
+export const GET_RANDOM_TRIVIA = 'get_random_trivia';
+export const GET_RANDOM_TRIVIA_SUCCESS = 'get_random_trivia_success';
+export const GET_RANDOM_TRIVIA_FAILURE = 'get_random_trivia_failure';

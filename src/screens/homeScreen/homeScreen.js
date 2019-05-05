@@ -1,50 +1,42 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
 class HomeScreen extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    getJoke = () => {
-        Actions.push('jokes');
+    goToJokeScreen = () => {
+        Actions.push('jokeScreen');
     };
 
-    getHistoryFact = () => {
-        Actions.push('dateHistory');
+    goToHistoryScreen = () => {
+        Actions.push('historyScreen');
+    };
+
+    goToTriviaScreen = () => {
+        Actions.push('triviaScreen');
     };
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>{this.props.setup}</Text>
-                <Text style={styles.instructions}>{this.props.punchline}</Text>
                 <TouchableOpacity
-                    onPress={()=> this.getJoke()}
+                    onPress={()=> this.goToJokeScreen()}
                 >
                     <Text style={styles.instructions}>Jokes</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={()=> this.getHistoryFact()}
+                    onPress={()=> this.goToHistoryScreen()}
                 >
                     <Text style={styles.instructions}>History Facts</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=> this.goToTriviaScreen()}
+                >
+                    <Text style={styles.instructions}>Random Trivia</Text>
                 </TouchableOpacity>
             </View>
         );
     }
 }
-
-const mapStateToProps = ({ randomJoke }) => ({
-    setup: randomJoke.setup,
-    punchline: randomJoke.punchline,
-});
-
-const mapDispatchToProps = dispatch => ({
-    dispatch,
-});
-
 
 const styles = StyleSheet.create({
     container: {
@@ -66,4 +58,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default HomeScreen;

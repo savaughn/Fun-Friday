@@ -1,10 +1,12 @@
 import { all } from 'redux-saga/effects';
-import randomJoke from './randomJoke/randomJokeSaga';
-import dateHistory from './dateHistory/dateHistorySaga';
+import jokeSaga from './jokeSaga/jokeSaga';
+import historySaga from './historySaga/historySaga';
+import triviaSaga from './triviaSaga/triviaSaga';
 
 export default function* rootSaga() {
   yield all([
-    randomJoke.sagaWatcher(),
-    dateHistory.sagaWatcher(),
+    jokeSaga.sagaWatcher(),
+    historySaga.sagaWatcher(),
+    triviaSaga.sagaWatcher(),
   ]);
 }

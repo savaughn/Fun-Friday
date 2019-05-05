@@ -3,7 +3,7 @@ import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { connect } from 'react-redux';
 import { GET_HISTORY_FACT } from "../../state/ActionTypes";
 
-class DateHistory extends Component {
+class HistoryScreen extends Component {
   constructor(props) {
     super(props);
   }
@@ -25,7 +25,7 @@ class DateHistory extends Component {
             <TouchableOpacity
                 onPress={()=> this.getHistory()}
             >
-                <Text style={styles.instructions}>Get HISTORY FACT</Text>
+                <Text style={styles.instructions}>Get HISTORY FACTS</Text>
             </TouchableOpacity>
             <FlatList
                 data={ this.props.event }
@@ -37,8 +37,8 @@ class DateHistory extends Component {
   }
 }
 
-const mapStateToProps = ({ dateHistory }) => ({
-  event: dateHistory.event,
+const mapStateToProps = ({ randomHistory }) => ({
+  event: randomHistory.event,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(DateHistory);
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryScreen);

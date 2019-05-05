@@ -1,8 +1,9 @@
 import React from 'react';
 import { Router, Scene, Actions } from 'react-native-router-flux';
 import JokeScreen from '../screens/jokeScreen/jokeScreen';
-import DateHistory from '../screens/dateHistory/dateHistory';
+import HistoryScreen from '../screens/historyScreen/historyScreen';
 import HomeScreen from '../screens/homeScreen/homeScreen';
+import TriviaScreen from '../screens/triviaScreen/triviaScreen';
 
 const onBackPress = () => {
     if (Actions.state.index === 0) {
@@ -16,17 +17,21 @@ const Navigator = () => (
     <Router backAndroidHandler={ () => onBackPress() }>
         <Scene key='root'>
             <Scene
-                key='home'
+                key='homeScreen'
                 component={ HomeScreen }
                 hideNavBar
             />
             <Scene
-                key='jokes'
+                key='jokeScreen'
                 component={ JokeScreen }
             />
             <Scene
-                key='dateHistory'
-                component={ DateHistory }
+                key='historyScreen'
+                component={ HistoryScreen }
+            />
+            <Scene
+                key='triviaScreen'
+                component={ TriviaScreen }
             />
         </Scene>
     </Router>

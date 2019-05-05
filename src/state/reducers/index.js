@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux';
-import randomJokeReducer from './randomJoke/randomJokeReducer';
-import dateHistoryReducer from './dateHistory/dateHistoryReducer';
+import jokeReducer from './jokeReducer/jokeReducer';
+import historyReducer from './historyReducer/historyReducer';
+import triviaReducer from './triviaReducer/triviaReducer';
 
 const combinedReducers = combineReducers({
-  randomJoke: randomJokeReducer,
-  dateHistory: dateHistoryReducer,
+randomJoke: jokeReducer,
+randomHistory: historyReducer,
+randomTrivia: triviaReducer,
 });
 
 const rootReducer = (state, action) => {
-  return combinedReducers(state, action);
+    return combinedReducers(state, action);
 };
 
 module.exports = {
