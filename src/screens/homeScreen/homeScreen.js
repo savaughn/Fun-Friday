@@ -25,21 +25,23 @@ class HomeScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity
-                    onPress={()=> this.goToJokeScreen()}
-                >
-                    <Text style={styles.items}>Jokes</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={()=> this.goToHistoryScreen()}
-                >
-                    <Text style={styles.items}>History Facts</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={()=> this.goToTriviaScreen()}
-                >
-                    <Text style={styles.items}>Random Trivia</Text>
-                </TouchableOpacity>
+                <View style={ styles.header}>
+                    <TouchableOpacity
+                        onPress={()=> this.goToJokeScreen()}
+                    >
+                        <Text style={styles.items}>Jokes</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=> this.goToHistoryScreen()}
+                    >
+                        <Text style={styles.items}>History Facts</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=> this.goToTriviaScreen()}
+                    >
+                        <Text style={styles.items}>Random Trivia</Text>
+                    </TouchableOpacity>
+                </View>
                 {
                     this.props.favorites &&
                     <FlatList
@@ -65,9 +67,12 @@ const mapDispatchToProps = dispatch => ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         backgroundColor: '#F5FCFF',
         marginTop: 50,
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
     },
     items: {
         textAlign: 'center',
