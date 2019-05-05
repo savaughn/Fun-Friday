@@ -26,15 +26,12 @@ class TriviaScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity
-                    onPress={()=> this.getTrivia()}
-                >
-                    <Text style={styles.item}>Get more random trivia</Text>
-                </TouchableOpacity>
                 <FlatList
                     data={ this.props.trivia }
                     keyExtractor={this.keyExtractor}
                     renderItem={({item}) => <Text style={ {margin: 10 } }>{`${item.category}: ${item.question}\nCorrect Answer:${item.correctAnswer}\nMultiple Choice: ${item.multipleChoice}`}</Text>}
+                    onRefresh={()=> this.getTrivia()}
+                    refreshing={ this.props.refreshing }
                 />
             </View>
         );
@@ -43,6 +40,7 @@ class TriviaScreen extends Component {
 
 const mapStateToProps = ({ randomTrivia }) => ({
     trivia: randomTrivia.trivia,
+    refreshing: randomTrivia.refreshing,
 });
 
 const mapDispatchToProps = dispatch => ({

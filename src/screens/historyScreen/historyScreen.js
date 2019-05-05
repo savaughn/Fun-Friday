@@ -24,17 +24,20 @@ class HistoryScreen extends Component {
 
 
     render() {
-    return (
+        console.log(this.props.event);
+        return (
         <View style={styles.container}>
             <TouchableOpacity
                 onPress={()=> this.getHistory()}
             >
-                <Text style={styles.item}>Refresh history facts</Text>
+                <Text style={styles.item}>{this.props.event.currentDate}</Text>
             </TouchableOpacity>
             <FlatList
-                data={ this.props.event }
+                data={ this.props.event.filteredEvents }
                 keyExtractor={this.keyExtractor}
                 renderItem={({item}) => <Text style={ {margin: 10 } }>{`${item.year}: ${item.text}\n`}</Text>}
+                onRefresh={()=> this.getHistory()}
+                refreshing={ this.props.refreshing }
             />
         </View>
     );
@@ -43,6 +46,7 @@ class HistoryScreen extends Component {
 
 const mapStateToProps = ({ randomHistory }) => ({
   event: randomHistory.event,
+  refreshing: randomHistory.refreshing,
 });
 
 const mapDispatchToProps = dispatch => ({

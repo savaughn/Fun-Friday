@@ -17,21 +17,25 @@ function* saga() {
 }
 
 function getHistoryFact() {
-    let filteredEvents = [];
+    let data = {
+        filteredEvents: [],
+        currentDate: new Date().toDateString(),
+    };
     let index = 0;
     return fetch('https://history.muffinlabs.com/date')
         .then((res) => res.json())
         .then((json) => {
             const unfilteredEventArray = json.data.Events;
             unfilteredEventArray.map((item) => {
-                filteredEvents.push({
+                data.filteredEvents.push({
                     index,
                     year: item.year,
                     text: item.text,
                 });
                 index++;
             });
-            return filteredEvents;
+            console.log(data);
+            return data;
         });
 }
 
