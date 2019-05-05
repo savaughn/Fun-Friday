@@ -40,15 +40,12 @@ class JokeScreen extends Component {
     render() {
     return (
         <View style={styles.container}>
-            <TouchableOpacity
-            onPress={()=> this.getJoke()}
-            >
-                <Text style={styles.instructions}>Get more jokes</Text>
-            </TouchableOpacity>
             <FlatList
                 data={ this.props.jokes }
                 keyExtractor={this.keyExtractor}
                 renderItem={ this.renderItem }
+                onRefresh={()=> this.getJoke()}
+                refreshing={ this.props.refreshing }
             />
         </View>
     );
@@ -57,6 +54,7 @@ class JokeScreen extends Component {
 
 const mapStateToProps = ({ randomJoke }) => ({
   jokes: randomJoke.jokes,
+  refreshing: randomJoke.refreshing,
 });
 
 const mapDispatchToProps = dispatch => ({
