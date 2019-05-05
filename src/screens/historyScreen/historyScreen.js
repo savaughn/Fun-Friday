@@ -8,8 +8,13 @@ class HistoryScreen extends Component {
     super(props);
   }
 
+  componentDidMount() {
+      this.props.dispatch({
+          type: GET_HISTORY_FACT,
+      });
+  }
+
   getHistory = () => {
-      console.log('onPress');
       this.props.dispatch({
         type: GET_HISTORY_FACT,
     });
@@ -19,13 +24,12 @@ class HistoryScreen extends Component {
 
 
     render() {
-    console.log('in screen', this.props.event);
     return (
         <View style={styles.container}>
             <TouchableOpacity
                 onPress={()=> this.getHistory()}
             >
-                <Text style={styles.instructions}>Get HISTORY FACTS</Text>
+                <Text style={styles.item}>Refresh history facts</Text>
             </TouchableOpacity>
             <FlatList
                 data={ this.props.event }
@@ -53,12 +57,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
+    item: {
         textAlign: 'center',
         color: '#333333',
         marginBottom: 5,

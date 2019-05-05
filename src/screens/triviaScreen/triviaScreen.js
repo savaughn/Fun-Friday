@@ -8,6 +8,12 @@ class TriviaScreen extends Component {
         super(props);
     }
 
+    componentDidMount() {
+        this.props.dispatch({
+            type: GET_RANDOM_TRIVIA,
+        });
+    }
+
     getTrivia = () => {
         this.props.dispatch({
             type: GET_RANDOM_TRIVIA,
@@ -23,7 +29,7 @@ class TriviaScreen extends Component {
                 <TouchableOpacity
                     onPress={()=> this.getTrivia()}
                 >
-                    <Text style={styles.instructions}>Get Random trivia</Text>
+                    <Text style={styles.item}>Get more random trivia</Text>
                 </TouchableOpacity>
                 <FlatList
                     data={ this.props.trivia }
@@ -51,12 +57,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
+    item: {
         textAlign: 'center',
         color: '#333333',
         marginBottom: 5,

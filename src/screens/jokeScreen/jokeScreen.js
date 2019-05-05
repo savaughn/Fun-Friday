@@ -8,15 +8,19 @@ class JokeScreen extends Component {
     super(props);
   }
 
+  componentDidMount() {
+      this.props.dispatch({
+          type: GET_RANDOM_JOKE,
+      });
+  }
+
   getJoke = () => {
-      console.log('onPress');
       this.props.dispatch({
         type: GET_RANDOM_JOKE,
     });
   };
 
   saveToFavorite = (item) => {
-      console.log(item);
       this.props.dispatch({
           type: SAVE_TO_FAVORITES,
           payload: item,
@@ -39,7 +43,7 @@ class JokeScreen extends Component {
             <TouchableOpacity
             onPress={()=> this.getJoke()}
             >
-                <Text style={styles.instructions}>Get Jokes</Text>
+                <Text style={styles.instructions}>Get more jokes</Text>
             </TouchableOpacity>
             <FlatList
                 data={ this.props.jokes }

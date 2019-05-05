@@ -34,7 +34,7 @@ class HomeScreen extends Component {
                     <TouchableOpacity
                         onPress={()=> this.goToHistoryScreen()}
                     >
-                        <Text style={styles.items}>History Facts</Text>
+                        <Text style={styles.items}>Today in History</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={()=> this.goToTriviaScreen()}

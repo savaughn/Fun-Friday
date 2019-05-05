@@ -7,10 +7,8 @@ function* sagaWatcher() {
 }
 
 function* saga({ payload }) {
-    console.log('saga', payload);
     try {
         const favArray = yield call(createFavoritesArray, payload);
-        console.log('fafafaf', favArray);
         yield put({ type: SAVE_TO_FAVORITES_SUCCESS, favArray });
     } catch (err) {
         yield put({ type: SAVE_TO_FAVORITES_FAILURE });
@@ -18,7 +16,7 @@ function* saga({ payload }) {
 }
 
 function createFavoritesArray(payload) {
-    console.log('gggg', payload);
+    //TODO: Don't init favs array. Get from state.
     const tmp = [];
     tmp.push({
         id: payload.id,
