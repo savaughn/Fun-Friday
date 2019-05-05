@@ -24,14 +24,17 @@ const Navigator = () => (
             <Scene
                 key='jokeScreen'
                 component={ JokeScreen }
+                title='Jokes'
             />
             <Scene
                 key='historyScreen'
                 component={ HistoryScreen }
+                title='Today in History'
             />
             <Scene
                 key='triviaScreen'
                 component={ TriviaScreen }
+                title='Trivia'
             />
         </Scene>
     </Router>

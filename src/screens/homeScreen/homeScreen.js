@@ -39,7 +39,7 @@ class HomeScreen extends Component {
                     <TouchableOpacity
                         onPress={()=> this.goToTriviaScreen()}
                     >
-                        <Text style={styles.items}>Random Trivia</Text>
+                        <Text style={styles.items}>Trivia</Text>
                     </TouchableOpacity>
                 </View>
                 {
