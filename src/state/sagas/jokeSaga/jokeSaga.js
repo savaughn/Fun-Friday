@@ -19,8 +19,8 @@ function* saga() {
 }
 
 function getRandomJoke() {
-    return fetch('https://official-joke-api.appspot.com/random_joke')
-        .then((res) => res.json());
+    return fetch('https://official-joke-api.appspot.com/random_ten')
+        .then((res) => res.json())
 }
 
 

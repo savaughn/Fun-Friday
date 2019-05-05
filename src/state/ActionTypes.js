@@ -12,3 +12,8 @@ export const GET_HISTORY_FACT_FAILURE = 'get_history_fact_failure';
 export const GET_RANDOM_TRIVIA = 'get_random_trivia';
 export const GET_RANDOM_TRIVIA_SUCCESS = 'get_random_trivia_success';
 export const GET_RANDOM_TRIVIA_FAILURE = 'get_random_trivia_failure';
+
+// Favorites
+export const SAVE_TO_FAVORITES = 'save_to_favorites';
+export const SAVE_TO_FAVORITES_SUCCESS = 'save_to_favorites_success';
+export const SAVE_TO_FAVORITES_FAILURE = 'save_to_favorites_failure';

@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
 class HomeScreen extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     goToJokeScreen = () => {
         Actions.push('jokeScreen');
     };
@@ -15,42 +20,56 @@ class HomeScreen extends Component {
         Actions.push('triviaScreen');
     };
 
+    keyExtractor = (item) => item.id.toString();
+
     render() {
         return (
             <View style={styles.container}>
                 <TouchableOpacity
                     onPress={()=> this.goToJokeScreen()}
                 >
-                    <Text style={styles.instructions}>Jokes</Text>
+                    <Text style={styles.items}>Jokes</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={()=> this.goToHistoryScreen()}
                 >
-                    <Text style={styles.instructions}>History Facts</Text>
+                    <Text style={styles.items}>History Facts</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={()=> this.goToTriviaScreen()}
                 >
-                    <Text style={styles.instructions}>Random Trivia</Text>
+                    <Text style={styles.items}>Random Trivia</Text>
                 </TouchableOpacity>
+                {
+                    this.props.favorites &&
+                    <FlatList
+                        data={ this.props.favorites }
+                        keyExtractor={this.keyExtractor}
+                        renderItem={({item}) => <Text style={ {margin: 10 } }>{`${item.text}`}</Text>}
+                    />
+                }
             </View>
         );
     }
 }
 
+const mapStateToProps = ({ favorites }) => ({
+    favorites: favorites.favorites,
+});
+
+const mapDispatchToProps = dispatch => ({
+    dispatch,
+});
+
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
+        marginTop: 50,
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
+    items: {
         textAlign: 'center',
         color: '#333333',
         marginBottom: 5,
@@ -58,4 +77,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default HomeScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

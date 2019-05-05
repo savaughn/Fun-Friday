@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { connect } from 'react-redux';
-import {GET_RANDOM_JOKE} from "../../state/ActionTypes";
+import {GET_RANDOM_JOKE, SAVE_TO_FAVORITES} from "../../state/ActionTypes";
 
 class JokeScreen extends Component {
   constructor(props) {
@@ -15,25 +15,44 @@ class JokeScreen extends Component {
     });
   };
 
-  render() {
+  saveToFavorite = (item) => {
+      console.log(item);
+      this.props.dispatch({
+          type: SAVE_TO_FAVORITES,
+          payload: item,
+      });
+  };
 
+    keyExtractor = (item) => item.id.toString();
+
+    renderItem = ({item}) => (
+        <TouchableOpacity
+            onPress={ () => this.saveToFavorite(item) }
+        >
+            <Text style={ {margin: 10 } }>{`${item.setup} \n${item.punchline}`}</Text>
+        </TouchableOpacity>
+    );
+
+    render() {
     return (
         <View style={styles.container}>
-          <Text style={styles.welcome}>{this.props.setup}</Text>
-          <Text style={styles.instructions}>{this.props.punchline}</Text>
             <TouchableOpacity
             onPress={()=> this.getJoke()}
             >
-                <Text style={styles.instructions}>Get Joke</Text>
+                <Text style={styles.instructions}>Get Jokes</Text>
             </TouchableOpacity>
+            <FlatList
+                data={ this.props.jokes }
+                keyExtractor={this.keyExtractor}
+                renderItem={ this.renderItem }
+            />
         </View>
     );
   }
 }
 
 const mapStateToProps = ({ randomJoke }) => ({
-  setup: randomJoke.setup,
-  punchline: randomJoke.punchline,
+  jokes: randomJoke.jokes,
 });
 
 const mapDispatchToProps = dispatch => ({
