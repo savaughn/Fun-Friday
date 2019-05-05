@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import {GET_RANDOM_JOKE, SAVE_TO_FAVORITES} from "../../state/ActionTypes";
+
 
 class JokeScreen extends Component {
   constructor(props) {
@@ -23,7 +25,7 @@ class JokeScreen extends Component {
   saveToFavorite = (item) => {
       this.props.dispatch({
           type: SAVE_TO_FAVORITES,
-          payload: item,
+          payload: {item, favArray: this.props.favorites},
       });
   };
 
@@ -52,9 +54,10 @@ class JokeScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ randomJoke }) => ({
+const mapStateToProps = ({ randomJoke, favorites }) => ({
   jokes: randomJoke.jokes,
   refreshing: randomJoke.refreshing,
+    favorites: favorites.favorites,
 });
 
 const mapDispatchToProps = dispatch => ({

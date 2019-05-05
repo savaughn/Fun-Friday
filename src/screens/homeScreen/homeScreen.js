@@ -23,6 +23,7 @@ class HomeScreen extends Component {
     keyExtractor = (item) => item.id.toString();
 
     render() {
+        console.log('home', this.props.favorites);
         return (
             <View style={styles.container}>
                 <View style={ styles.header}>
@@ -59,11 +60,6 @@ const mapStateToProps = ({ favorites }) => ({
     favorites: favorites.favorites,
 });
 
-const mapDispatchToProps = dispatch => ({
-    dispatch,
-});
-
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -82,4 +78,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(mapStateToProps)(HomeScreen);

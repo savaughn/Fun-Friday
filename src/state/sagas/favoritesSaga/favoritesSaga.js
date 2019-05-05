@@ -7,22 +7,21 @@ function* sagaWatcher() {
 }
 
 function* saga({ payload }) {
+    console.log('fav pay', payload);
     try {
-        const favArray = yield call(createFavoritesArray, payload);
+        const favArray = yield call(saveItemToArray, payload);
         yield put({ type: SAVE_TO_FAVORITES_SUCCESS, favArray });
     } catch (err) {
         yield put({ type: SAVE_TO_FAVORITES_FAILURE });
     }
 }
 
-function createFavoritesArray(payload) {
-    //TODO: Don't init favs array. Get from state.
-    const tmp = [];
-    tmp.push({
-        id: payload.id,
-        text: `${payload.setup}\n${payload.punchline}`,
+function saveItemToArray(payload) {
+    payload.favArray.push({
+        id: payload.item.id,
+        text: `${payload.item.setup}\n${payload.item.punchline}`,
     });
-    return tmp;
+    return payload.favArray;
 }
 
 module.exports = {

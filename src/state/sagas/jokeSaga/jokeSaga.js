@@ -7,7 +7,6 @@ function* sagaWatcher() {
 }
 
 function* saga() {
-    console.log('in saga');
     try {
         const joke = yield call(getRandomJoke);
         console.log(joke);
