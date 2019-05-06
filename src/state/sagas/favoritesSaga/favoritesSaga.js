@@ -1,4 +1,5 @@
 import React from 'react';
+import {AsyncStorage} from 'react-native';
 import { call, takeLatest, put } from 'redux-saga/effects';
 import _ from 'lodash';
 import {
@@ -19,32 +20,38 @@ function* deleteItem({ payload }) {
     try {
         const favArray = yield call(removeItemFromArray, payload);
         yield put({ type: REMOVE_FROM_FAVORITES_SUCCESS, favArray});
+        yield storeData(favArray)
     } catch (err) {
         yield put({ type: REMOVE_FROM_FAVORITES_FAILURE });
     }
 }
 
+storeData = async (favArray) => {
+    try {
+        if (favArray.length)
+            await AsyncStorage.setItem('favorites', JSON.stringify(favArray));
+    } catch (error) {
+        // Error saving data
+    }
+};
+
 function removeItemFromArray(payload) {
-    console.log('del', payload);
     _.remove(payload.favArray, function(itemInArray) {
         return itemInArray === payload.item;
     });
 }
 
 function* saveItem({ payload }) {
-    console.log('saga', payload);
     try {
         const favArray = yield call(saveItemToArray, payload);
-        console.log('done', favArray);
         yield put({ type: SAVE_TO_FAVORITES_SUCCESS, favArray });
+        yield storeData(favArray)
     } catch (err) {
-        console.log('fail');
         yield put({ type: SAVE_TO_FAVORITES_FAILURE });
     }
 }
 
 function saveItemToArray(payload) {
-    console.log('payload', payload);
     const type = payload.item.type;
     switch(type) {
         case 'history': {

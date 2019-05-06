@@ -39,7 +39,6 @@ class HistoryScreen extends Component {
 
 
     render() {
-        console.log(this.props.event);
         return (
         <View style={styles.container}>
             <Text style={styles.item}>{this.props.event.currentDate}</Text>
