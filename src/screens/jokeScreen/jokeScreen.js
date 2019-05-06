@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 import {GET_RANDOM_JOKE, SAVE_TO_FAVORITES} from "../../state/ActionTypes";
 
 
@@ -11,9 +10,9 @@ class JokeScreen extends Component {
   }
 
   componentDidMount() {
-      this.props.dispatch({
-          type: GET_RANDOM_JOKE,
-      });
+      if (!this.props.jokes.length) {
+          this.getJoke();
+      }
   }
 
   getJoke = () => {
@@ -57,7 +56,7 @@ class JokeScreen extends Component {
 const mapStateToProps = ({ randomJoke, favorites }) => ({
   jokes: randomJoke.jokes,
   refreshing: randomJoke.refreshing,
-    favorites: favorites.favorites,
+  favorites: favorites.favorites,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -9,9 +9,9 @@ class TriviaScreen extends Component {
     }
 
     componentDidMount() {
-        this.props.dispatch({
-            type: GET_RANDOM_TRIVIA,
-        });
+        if (!this.props.trivia.length) {
+            this.getTrivia();
+        }
     }
 
     getTrivia = () => {

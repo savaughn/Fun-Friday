@@ -9,9 +9,9 @@ class HistoryScreen extends Component {
   }
 
   componentDidMount() {
-      this.props.dispatch({
-          type: GET_HISTORY_FACT,
-      });
+      if (!this.props.event.length) {
+          this.getHistory();
+      }
   }
 
   getHistory = () => {
