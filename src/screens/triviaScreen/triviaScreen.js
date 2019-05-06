@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { connect } from 'react-redux';
-import { GET_RANDOM_TRIVIA } from '../../state/ActionTypes';
+import { GET_RANDOM_TRIVIA, SAVE_TO_FAVORITES } from '../../state/ActionTypes';
 
 class TriviaScreen extends Component {
     constructor(props) {
@@ -20,7 +20,22 @@ class TriviaScreen extends Component {
         });
     };
 
-    keyExtractor = (item) => item.index.toString();
+    saveToFavorite = (item) => {
+        this.props.dispatch({
+            type: SAVE_TO_FAVORITES,
+            payload: {item, favArray: this.props.favorites},
+        });
+    };
+
+    keyExtractor = (item) => item.id.toString();
+
+    renderItem = ({item}) => (
+        <TouchableOpacity
+            onPress={ () => this.saveToFavorite(item) }
+        >
+            <Text style={ {margin: 10 } }>{`${item.category}: ${item.question}\nCorrect Answer:${item.correctAnswer}\nMultiple Choice: ${item.multipleChoice}`}</Text>
+        </TouchableOpacity>
+    );
 
 
     render() {
@@ -29,7 +44,7 @@ class TriviaScreen extends Component {
                 <FlatList
                     data={ this.props.trivia }
                     keyExtractor={this.keyExtractor}
-                    renderItem={({item}) => <Text style={ {margin: 10 } }>{`${item.category}: ${item.question}\nCorrect Answer:${item.correctAnswer}\nMultiple Choice: ${item.multipleChoice}`}</Text>}
+                    renderItem={ this.renderItem }
                     onRefresh={()=> this.getTrivia()}
                     refreshing={ this.props.refreshing }
                 />
@@ -38,9 +53,10 @@ class TriviaScreen extends Component {
     }
 }
 
-const mapStateToProps = ({ randomTrivia }) => ({
+const mapStateToProps = ({ randomTrivia, favorites }) => ({
     trivia: randomTrivia.trivia,
     refreshing: randomTrivia.refreshing,
+    favorites: favorites.favorites,
 });
 
 const mapDispatchToProps = dispatch => ({

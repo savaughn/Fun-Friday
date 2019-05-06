@@ -9,7 +9,6 @@ function* sagaWatcher() {
 function* saga() {
     try {
         const joke = yield call(getRandomJoke);
-        console.log(joke);
         yield put({ type: GET_RANDOM_JOKE_SUCCESS, payload: joke });
     } catch (err) {
         yield put({ type: GET_RANDOM_JOKE_FAILURE });

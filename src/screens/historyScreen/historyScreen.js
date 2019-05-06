@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { connect } from 'react-redux';
-import { GET_HISTORY_FACT } from "../../state/ActionTypes";
+import { GET_HISTORY_FACT, SAVE_TO_FAVORITES } from "../../state/ActionTypes";
 
 class HistoryScreen extends Component {
   constructor(props) {
@@ -20,22 +20,33 @@ class HistoryScreen extends Component {
     });
   };
 
-  keyExtractor = (item) => item.index.toString();
+    saveToFavorite = (item) => {
+        this.props.dispatch({
+            type: SAVE_TO_FAVORITES,
+            payload: {item, favArray: this.props.favorites},
+        });
+    };
+
+  keyExtractor = (item) => item.id.toString();
+
+    renderItem = ({item}) => (
+        <TouchableOpacity
+            onPress={ () => this.saveToFavorite(item) }
+        >
+            <Text style={ {margin: 10 } }>{`${item.year}: ${item.text}`}</Text>
+        </TouchableOpacity>
+    );
 
 
     render() {
         console.log(this.props.event);
         return (
         <View style={styles.container}>
-            <TouchableOpacity
-                onPress={()=> this.getHistory()}
-            >
-                <Text style={styles.item}>{this.props.event.currentDate}</Text>
-            </TouchableOpacity>
+            <Text style={styles.item}>{this.props.event.currentDate}</Text>
             <FlatList
                 data={ this.props.event.filteredEvents }
                 keyExtractor={this.keyExtractor}
-                renderItem={({item}) => <Text style={ {margin: 10 } }>{`${item.year}: ${item.text}\n`}</Text>}
+                renderItem={ this.renderItem }
                 onRefresh={()=> this.getHistory()}
                 refreshing={ this.props.refreshing }
             />
@@ -44,9 +55,10 @@ class HistoryScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ randomHistory }) => ({
+const mapStateToProps = ({ randomHistory, favorites }) => ({
   event: randomHistory.event,
   refreshing: randomHistory.refreshing,
+  favorites: favorites.favorites,
 });
 
 const mapDispatchToProps = dispatch => ({

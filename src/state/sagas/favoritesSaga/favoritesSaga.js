@@ -7,20 +7,42 @@ function* sagaWatcher() {
 }
 
 function* saga({ payload }) {
-    console.log('fav pay', payload);
+    console.log('saga', payload);
     try {
         const favArray = yield call(saveItemToArray, payload);
+        console.log('done', favArray);
         yield put({ type: SAVE_TO_FAVORITES_SUCCESS, favArray });
     } catch (err) {
+        console.log('fail');
         yield put({ type: SAVE_TO_FAVORITES_FAILURE });
     }
 }
 
 function saveItemToArray(payload) {
-    payload.favArray.push({
-        id: payload.item.id,
-        text: `${payload.item.setup}\n${payload.item.punchline}`,
-    });
+    console.log('payload', payload);
+    const type = payload.item.type;
+    switch(type) {
+        case 'history': {
+            payload.favArray.push({
+                id: payload.item.id,
+                text: `${payload.item.year}: ${payload.item.text}\n`,
+            });
+            break;
+        }
+        case 'trivia': {
+            payload.favArray.push({
+                id: payload.item.id,
+                text: `${payload.item.category}: ${payload.item.question}\nCorrect Answer:${payload.item.correctAnswer}\nMultiple Choice: ${payload.item.multipleChoice}`,
+            });
+            break;
+        }
+        default: {
+            payload.favArray.push({
+                id: payload.item.id,
+                text: `${payload.item.setup}\n${payload.item.punchline}`,
+            });
+        }
+    }
     return payload.favArray;
 }
 

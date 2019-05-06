@@ -28,13 +28,13 @@ function getHistoryFact() {
             const unfilteredEventArray = json.data.Events;
             unfilteredEventArray.map((item) => {
                 data.filteredEvents.push({
-                    index,
+                    type: 'history',
+                    id: index,
                     year: item.year,
                     text: item.text,
                 });
                 index++;
             });
-            console.log(data);
             return data;
         });
 }
