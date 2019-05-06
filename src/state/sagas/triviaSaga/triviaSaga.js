@@ -26,7 +26,7 @@ function getRandomTrivia() {
             results.map((item) => {
                 filteredTrivia.push({
                     type: 'trivia',
-                    id: index,
+                    id: `t${index}`,
                     category: item.category,
                     question: item.question,
                     correctAnswer: item.correct_answer,

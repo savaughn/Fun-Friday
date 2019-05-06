@@ -1,12 +1,37 @@
 import React from 'react';
 import { call, takeLatest, put } from 'redux-saga/effects';
-import { SAVE_TO_FAVORITES, SAVE_TO_FAVORITES_SUCCESS, SAVE_TO_FAVORITES_FAILURE } from '../../ActionTypes';
+import _ from 'lodash';
+import {
+    SAVE_TO_FAVORITES,
+    SAVE_TO_FAVORITES_SUCCESS,
+    SAVE_TO_FAVORITES_FAILURE,
+    REMOVE_FROM_FAVORITES,
+    REMOVE_FROM_FAVORITES_SUCCESS,
+    REMOVE_FROM_FAVORITES_FAILURE,
+} from '../../ActionTypes';
 
 function* sagaWatcher() {
-  yield takeLatest(SAVE_TO_FAVORITES, saga);
+  yield takeLatest(SAVE_TO_FAVORITES, saveItem);
+  yield takeLatest(REMOVE_FROM_FAVORITES, deleteItem)
 }
 
-function* saga({ payload }) {
+function* deleteItem({ payload }) {
+    try {
+        const favArray = yield call(removeItemFromArray, payload);
+        yield put({ type: REMOVE_FROM_FAVORITES_SUCCESS, favArray});
+    } catch (err) {
+        yield put({ type: REMOVE_FROM_FAVORITES_FAILURE });
+    }
+}
+
+function removeItemFromArray(payload) {
+    console.log('del', payload);
+    _.remove(payload.favArray, function(itemInArray) {
+        return itemInArray === payload.item;
+    });
+}
+
+function* saveItem({ payload }) {
     console.log('saga', payload);
     try {
         const favArray = yield call(saveItemToArray, payload);

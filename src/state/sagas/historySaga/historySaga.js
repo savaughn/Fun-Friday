@@ -29,7 +29,7 @@ function getHistoryFact() {
             unfilteredEventArray.map((item) => {
                 data.filteredEvents.push({
                     type: 'history',
-                    id: index,
+                    id: `h${index}`,
                     year: item.year,
                     text: item.text,
                 });

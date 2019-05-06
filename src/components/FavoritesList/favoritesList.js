@@ -1,10 +1,26 @@
 import React, { Component } from 'react';
 import { FlatList, TouchableOpacity, Text, View } from 'react-native';
 import { refreshScreen } from '../../navigator/navigateTo';
+import { REMOVE_FROM_FAVORITES } from '../../state/ActionTypes';
+import {connect} from "react-redux";
 
-class Header extends Component {
+
+class FavoritesList extends Component {
 
     keyExtractor = (item) => item.id.toString();
+
+    renderItem = ({item}) => (
+        <TouchableOpacity
+            onPress={ () => {
+                this.props.dispatch({
+                    type: REMOVE_FROM_FAVORITES,
+                    payload: {item, favArray: this.props.favorites},
+                });
+            } }
+        >
+            <Text style={{margin: 10}}>{`${item.text}`}</Text>
+        </TouchableOpacity>
+    );
 
     render() {
         return (
@@ -14,7 +30,7 @@ class Header extends Component {
                 <FlatList
                     data={this.props.favorites}
                     keyExtractor={this.keyExtractor}
-                    renderItem={({item}) => <Text style={{margin: 10}}>{`${item.text}`}</Text>}
+                    renderItem={ this.renderItem }
                     onRefresh={() => refreshScreen()}
                     refreshing={this.props.refreshing}
                 />
@@ -28,7 +44,11 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const mapDispatchToProps = dispatch => ({
+    dispatch,
+});
+
+export default connect(mapDispatchToProps)(FavoritesList);
 
 
 
