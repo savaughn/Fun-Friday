@@ -8,10 +8,8 @@ function* sagaWatcher() {
 }
 
 function* saga() {
-    console.log('initializing');
     try {
         const favArray = yield call(initApp);
-        console.log(favArray);
         yield put({ type: SAVE_TO_FAVORITES_SUCCESS, favArray });
     } catch (err) {
         console.log(err);
