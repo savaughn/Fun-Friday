@@ -20,6 +20,9 @@ export const SAVE_TO_FAVORITES_FAILURE = 'save_to_favorites_failure';
 export const REMOVE_FROM_FAVORITES = 'remove_from_favorites';
 export const REMOVE_FROM_FAVORITES_SUCCESS = 'remove_from_favorites_success';
 export const REMOVE_FROM_FAVORITES_FAILURE = 'remove_from_favorites_failure';
+export const SAVE_TO_FAVORITES_LIST = 'save_to_favorites_list';
+export const SAVE_TO_FAVORITES_LIST_SUCCESS = 'save_to_favorites_list_success';
+export const SAVE_TO_FAVORITES_LIST_FAILURE = 'save_to_favorites_list_failure';
 
 // Initialize
 export const INITIALIZE_APP = 'initialize_app';

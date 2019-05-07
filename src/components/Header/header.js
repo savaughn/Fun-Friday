@@ -22,6 +22,11 @@ class Header extends Component {
                 >
                     <Text style={styles.items}>Trivia</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=> navigateTo('favoritesScreen')}
+                >
+                    <Text style={styles.items}>Favorites</Text>
+                </TouchableOpacity>
             </View>
         );
     }

@@ -1,9 +1,15 @@
-import { SAVE_TO_FAVORITES, SAVE_TO_FAVORITES_SUCCESS, SAVE_TO_FAVORITES_FAILURE } from '../../ActionTypes';
+import {
+    SAVE_TO_FAVORITES,
+    SAVE_TO_FAVORITES_SUCCESS,
+    SAVE_TO_FAVORITES_FAILURE,
+    SAVE_TO_FAVORITES_LIST_SUCCESS
+} from '../../ActionTypes';
 
 export const INITIAL_STATE = {
     favorites: [],
     error: false,
     refreshing: false,
+    favList: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -15,6 +21,8 @@ export default (state = INITIAL_STATE, action) => {
         }
         case SAVE_TO_FAVORITES_FAILURE:
             return { ...state, error: true, refreshing: false };
+        case SAVE_TO_FAVORITES_LIST_SUCCESS:
+            return { ...state, favList: action.favList, error: false, refreshing: false };
         default:
             return { ...state };
     }

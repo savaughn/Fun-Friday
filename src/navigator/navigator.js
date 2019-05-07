@@ -4,6 +4,7 @@ import JokeScreen from '../screens/jokeScreen/jokeScreen';
 import HistoryScreen from '../screens/historyScreen/historyScreen';
 import HomeScreen from '../screens/homeScreen/homeScreen';
 import TriviaScreen from '../screens/triviaScreen/triviaScreen';
+import FavoritesScreen from '../screens/favoritesScreen/favoritesScreen';
 
 const onBackPress = () => {
     if (Actions.state.index === 0) {
@@ -35,6 +36,11 @@ const Navigator = () => (
                 key='triviaScreen'
                 component={ TriviaScreen }
                 title='Trivia'
+            />
+            <Scene
+                key='favoritesScreen'
+                component={ FavoritesScreen }
+                title='Past Favorites Lists'
             />
         </Scene>
     </Router>

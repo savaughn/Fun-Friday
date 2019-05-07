@@ -1,5 +1,5 @@
 import React from 'react';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 import { call, takeLatest, put } from 'redux-saga/effects';
 import _ from 'lodash';
 import {
@@ -9,26 +9,31 @@ import {
     REMOVE_FROM_FAVORITES,
     REMOVE_FROM_FAVORITES_SUCCESS,
     REMOVE_FROM_FAVORITES_FAILURE,
+    SAVE_TO_FAVORITES_LIST,
+    SAVE_TO_FAVORITES_LIST_SUCCESS,
+    SAVE_TO_FAVORITES_LIST_FAILURE,
 } from '../../ActionTypes';
 
 function* sagaWatcher() {
   yield takeLatest(SAVE_TO_FAVORITES, saveItem);
-  yield takeLatest(REMOVE_FROM_FAVORITES, deleteItem)
+  yield takeLatest(REMOVE_FROM_FAVORITES, deleteItem);
+  yield takeLatest(SAVE_TO_FAVORITES_LIST, saveItem);
 }
 
-function* deleteItem({ payload }) {
+function* deleteItem({ payload, type }) {
     try {
         const favArray = yield call(removeItemFromArray, payload);
-        yield storeData(favArray);
+        yield storeData(type, favArray);
         yield put({ type: REMOVE_FROM_FAVORITES_SUCCESS, favArray});
     } catch (err) {
         yield put({ type: REMOVE_FROM_FAVORITES_FAILURE });
     }
 }
 
-storeData = async (favArray) => {
+storeData = async (type, data) => {
+    const key = type === 'save_to_favorites_list' ? 'favList' : 'favorites';
     try {
-        await AsyncStorage.setItem('favorites', JSON.stringify(favArray));
+        await AsyncStorage.setItem(key, JSON.stringify(data));
     } catch (error) {
         // Error saving data
     }
@@ -41,13 +46,25 @@ function removeItemFromArray(payload) {
     return payload.favArray;
 }
 
-function* saveItem({ payload }) {
-    try {
-        const favArray = yield call(saveItemToArray, payload);
-        yield put({ type: SAVE_TO_FAVORITES_SUCCESS, favArray });
-        yield storeData(favArray)
-    } catch (err) {
-        yield put({ type: SAVE_TO_FAVORITES_FAILURE });
+function* saveItem({ payload, type }) {
+    console.log(payload);
+    if (type === 'save_to_favorites_list') {
+        try {
+            const favList = yield call(saveListToArray, payload);
+            yield put({ type: SAVE_TO_FAVORITES_LIST_SUCCESS, favList });
+            yield storeData(type, favList);
+        } catch (err) {
+            console.log(err);
+            yield put({ type: SAVE_TO_FAVORITES_LIST_FAILURE });
+        }
+    } else {
+        try {
+            const favArray = yield call(saveItemToArray, payload);
+            yield put({ type: SAVE_TO_FAVORITES_SUCCESS, favArray });
+            yield storeData(type, favArray)
+        } catch (err) {
+            yield put({ type: SAVE_TO_FAVORITES_FAILURE });
+        }
     }
 }
 
@@ -76,6 +93,16 @@ function saveItemToArray(payload) {
         }
     }
     return payload.favArray;
+}
+
+function saveListToArray(payload) {
+    const date = new Date();
+    payload.favList.push({
+        id: Date.now(),
+        date: date.toDateString(),
+        list: payload.favArray,
+    });
+    return payload.favList;
 }
 
 module.exports = {
