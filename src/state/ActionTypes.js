@@ -23,3 +23,5 @@ export const REMOVE_FROM_FAVORITES_FAILURE = 'remove_from_favorites_failure';
 
 // Initialize
 export const INITIALIZE_APP = 'initialize_app';
+export const INITIALIZE_APP_SUCCESS = 'initialize_app_success';
+export const INITIALIZE_APP_FAILURE = 'initialize_app_failure';

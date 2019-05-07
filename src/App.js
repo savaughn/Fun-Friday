@@ -12,12 +12,12 @@ export default class App extends Component<Props> {
       super();
   }
 
-    // componentDidMount() {
-    //     console.disableYellowBox = true;
-    //     store.dispatch({
-    //         type: INITIALIZE_APP,
-    //     });
-    // }
+    componentWillMount() {
+        console.disableYellowBox = true;
+        store.dispatch({
+            type: INITIALIZE_APP,
+        });
+    }
 
   render() {
       return (
@@ -27,5 +27,3 @@ export default class App extends Component<Props> {
     );
   }
 }
-
-// TODO: Add app_init saga

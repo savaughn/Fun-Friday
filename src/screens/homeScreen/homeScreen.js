@@ -14,18 +14,20 @@ class HomeScreen extends Component {
             <View style={styles.container}>
                 <Header />
                 <FavoritesList
-                    favorites={ this.props.favorites }
-                    refreshing={ this.props.refreshing }
+                    favorites={this.props.favorites}
+                    refreshing={this.props.refreshing}
                 />
             </View>
         );
     }
 }
 
-const mapStateToProps = ({ favorites }) => ({
-    favorites: favorites.favorites,
-    refreshing: favorites.refreshing,
-});
+const mapStateToProps = ({ favorites }) => {
+    return {
+        favorites: favorites.favorites,
+        refreshing: favorites.refreshing,
+    };
+};
 
 const styles = StyleSheet.create({
     container: {

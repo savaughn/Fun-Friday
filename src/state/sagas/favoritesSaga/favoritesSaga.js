@@ -19,8 +19,8 @@ function* sagaWatcher() {
 function* deleteItem({ payload }) {
     try {
         const favArray = yield call(removeItemFromArray, payload);
+        yield storeData(favArray);
         yield put({ type: REMOVE_FROM_FAVORITES_SUCCESS, favArray});
-        yield storeData(favArray)
     } catch (err) {
         yield put({ type: REMOVE_FROM_FAVORITES_FAILURE });
     }
@@ -28,8 +28,7 @@ function* deleteItem({ payload }) {
 
 storeData = async (favArray) => {
     try {
-        if (favArray.length)
-            await AsyncStorage.setItem('favorites', JSON.stringify(favArray));
+        await AsyncStorage.setItem('favorites', JSON.stringify(favArray));
     } catch (error) {
         // Error saving data
     }
@@ -39,6 +38,7 @@ function removeItemFromArray(payload) {
     _.remove(payload.favArray, function(itemInArray) {
         return itemInArray === payload.item;
     });
+    return payload.favArray;
 }
 
 function* saveItem({ payload }) {
