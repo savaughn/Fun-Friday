@@ -9,7 +9,7 @@ class Footer extends Component {
         return (
             <View style={ styles.header}>
                 {
-                    this.props.favorites.length > 0 &&
+                    this.props.favorites &&
                     <TouchableOpacity
                         onPress={()=>{
                             this.props.dispatch({

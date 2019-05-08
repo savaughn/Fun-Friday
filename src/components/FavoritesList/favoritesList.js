@@ -35,6 +35,10 @@ class FavoritesList extends Component {
                     refreshing={this.props.refreshing}
                 />
             }
+            {/*{*/}
+                {/*!this.props.favorites &&*/}
+                {/*<Text>Favorites List</Text>*/}
+            {/*}*/}
             </View>
         );
     }
