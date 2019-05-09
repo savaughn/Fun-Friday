@@ -1,16 +1,20 @@
 import React from 'react';
 import { AsyncStorage } from 'react-native';
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { INITIALIZE_APP, INITIALIZE_APP_FAILURE, SAVE_TO_FAVORITES_SUCCESS } from '../../ActionTypes';
+import { INITIALIZE_APP, INITIALIZE_APP_FAILURE, RESTORE_FROM_ASYNC } from '../../ActionTypes';
+import {navigateTo} from "../../../navigator/navigateTo";
 
 function* sagaWatcher() {
   yield takeLatest(INITIALIZE_APP, saga);
 }
 
 function* saga() {
+    console.log('init');
     try {
-        const favArray = yield call(initApp);
-        yield put({ type: SAVE_TO_FAVORITES_SUCCESS, favArray });
+        const currentFavList = yield call(getCurrentFavList);
+        const pastFavList = yield call(getSavedFavList);
+        yield put({ type: RESTORE_FROM_ASYNC, payload: { favArray: currentFavList, favList: pastFavList }});
+        navigateTo('homeScreen');
     } catch (err) {
         console.log(err);
         yield put({ type: INITIALIZE_APP_FAILURE });
@@ -18,8 +22,12 @@ function* saga() {
 
 }
 
-async function initApp() {
-    return JSON.parse(await AsyncStorage.getItem('favorites'));
+async function getCurrentFavList() {
+    return JSON.parse(await AsyncStorage.getItem('favorites')) || [];
+}
+
+async function getSavedFavList() {
+    return JSON.parse(await AsyncStorage.getItem('favList')) || [];
 }
 
 module.exports = {

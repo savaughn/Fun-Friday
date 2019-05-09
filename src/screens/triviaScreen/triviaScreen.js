@@ -56,7 +56,7 @@ class TriviaScreen extends Component {
 const mapStateToProps = ({ randomTrivia, favorites }) => ({
     trivia: randomTrivia.trivia,
     refreshing: randomTrivia.refreshing,
-    favorites: favorites.favorites,
+    favorites: favorites.favArray,
 });
 
 const mapDispatchToProps = dispatch => ({

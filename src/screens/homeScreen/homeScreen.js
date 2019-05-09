@@ -8,18 +8,20 @@ import Footer from "../../components/Footer/footer";
 class HomeScreen extends Component {
     constructor(props) {
         super(props);
+        console.log('current', this.props.favArray);
+        console.log('past', this.props.favList);
     }
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={ styles.container }>
                 <Header />
                 <FavoritesList
-                    favorites={this.props.favorites}
-                    refreshing={this.props.refreshing}
+                    favorites={ this.props.favArray }
+                    refreshing={ this.props.refreshing }
                 />
                 <Footer
-                    favorites={ this.props.favorites }
+                    favorites={ this.props.favArray }
                 />
             </View>
         );
@@ -28,7 +30,7 @@ class HomeScreen extends Component {
 
 const mapStateToProps = ({ favorites }) => {
     return {
-        favorites: favorites.favorites,
+        favArray: favorites.favArray,
         favList: favorites.favList,
         refreshing: favorites.refreshing,
     };

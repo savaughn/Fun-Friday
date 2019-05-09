@@ -22,9 +22,10 @@ class JokeScreen extends Component {
   };
 
   saveToFavorite = (item) => {
+      console.log('save', item)
       this.props.dispatch({
           type: SAVE_TO_FAVORITES,
-          payload: {item, favArray: this.props.favorites},
+          payload: { item, favArray: this.props.favArray },
       });
   };
 
@@ -56,7 +57,7 @@ class JokeScreen extends Component {
 const mapStateToProps = ({ randomJoke, favorites }) => ({
   jokes: randomJoke.jokes,
   refreshing: randomJoke.refreshing,
-  favorites: favorites.favorites,
+  favArray: favorites.favArray,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -9,12 +9,12 @@ class Footer extends Component {
         return (
             <View style={ styles.header}>
                 {
-                    this.props.favorites &&
+                    this.props.favArray.length > 0 &&
                     <TouchableOpacity
                         onPress={()=>{
                             this.props.dispatch({
                                 type: SAVE_TO_FAVORITES_LIST,
-                                payload: { favList: this.props.favList, favArray: this.props.favorites },
+                                payload: { favList: this.props.favList, favArray: this.props.favArray },
                             });
                         } }
                     >
@@ -27,7 +27,7 @@ class Footer extends Component {
 }
 
 const mapStateToProps = ({ favorites }) => ({
-    favorites: favorites.favorites,
+    favArray: favorites.favArray,
     favList: favorites.favList,
 });
 

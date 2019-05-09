@@ -47,10 +47,10 @@ function removeItemFromArray(payload) {
 }
 
 function* saveItem({ payload, type }) {
-    console.log(payload);
     if (type === 'save_to_favorites_list') {
         try {
             const favList = yield call(saveListToArray, payload);
+            console.log('after save', favList);
             yield put({ type: SAVE_TO_FAVORITES_LIST_SUCCESS, favList });
             yield storeData(type, favList);
         } catch (err) {
@@ -59,6 +59,7 @@ function* saveItem({ payload, type }) {
         }
     } else {
         try {
+            console.log('ethnhn', payload);
             const favArray = yield call(saveItemToArray, payload);
             yield put({ type: SAVE_TO_FAVORITES_SUCCESS, favArray });
             yield storeData(type, favArray)
@@ -96,12 +97,14 @@ function saveItemToArray(payload) {
 }
 
 function saveListToArray(payload) {
+    console.log('in save', payload);
     const date = new Date();
     payload.favList.push({
         id: Date.now(),
         date: date.toDateString(),
         list: payload.favArray,
     });
+    console.log('end save', payload);
     return payload.favList;
 }
 

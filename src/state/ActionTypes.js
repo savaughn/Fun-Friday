@@ -28,3 +28,5 @@ export const SAVE_TO_FAVORITES_LIST_FAILURE = 'save_to_favorites_list_failure';
 export const INITIALIZE_APP = 'initialize_app';
 export const INITIALIZE_APP_SUCCESS = 'initialize_app_success';
 export const INITIALIZE_APP_FAILURE = 'initialize_app_failure';
+
+export const RESTORE_FROM_ASYNC = 'restore_from_async';

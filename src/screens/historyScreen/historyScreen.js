@@ -57,7 +57,7 @@ class HistoryScreen extends Component {
 const mapStateToProps = ({ randomHistory, favorites }) => ({
   event: randomHistory.event,
   refreshing: randomHistory.refreshing,
-  favorites: favorites.favorites,
+  favorites: favorites.favArray,
 });
 
 const mapDispatchToProps = dispatch => ({

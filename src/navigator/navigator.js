@@ -5,6 +5,7 @@ import HistoryScreen from '../screens/historyScreen/historyScreen';
 import HomeScreen from '../screens/homeScreen/homeScreen';
 import TriviaScreen from '../screens/triviaScreen/triviaScreen';
 import FavoritesScreen from '../screens/favoritesScreen/favoritesScreen';
+import SplashScreen from "../screens/splashScreen/splashScreen";
 
 const onBackPress = () => {
     if (Actions.state.index === 0) {
@@ -17,6 +18,11 @@ const onBackPress = () => {
 const Navigator = () => (
     <Router backAndroidHandler={ () => onBackPress() }>
         <Scene key='root'>
+            <Scene
+                key='splashScreen'
+                component={ SplashScreen }
+                hideNavBar
+            />
             <Scene
                 key='homeScreen'
                 component={ HomeScreen }
