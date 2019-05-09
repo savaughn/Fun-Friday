@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { connect } from 'react-redux';
-import { GET_HISTORY_FACT, SAVE_TO_FAVORITES } from "../../state/ActionTypes";
+import { REMOVE_FROM_FAVORITES_LIST } from '../../state/ActionTypes';
+import {refreshScreen} from "../../navigator/navigateTo";
 
 class FavoritesScreen extends Component {
   constructor(props) {
@@ -14,7 +15,11 @@ class FavoritesScreen extends Component {
     renderItem = ({item}) => (
         <TouchableOpacity
             onPress={ () => {
-                console.log(item);} }
+                this.props.dispatch({
+                    type: REMOVE_FROM_FAVORITES_LIST,
+                    payload: {item, favList: this.props.favList},
+                });
+            }}
         >
             <Text>{`${item.date}`}</Text>
             <FlatList
@@ -33,6 +38,8 @@ class FavoritesScreen extends Component {
                 data={ this.props.favList }
                 keyExtractor={this.keyExtractor}
                 renderItem={ this.renderItem }
+                onRefresh={() => refreshScreen(this.props.favList)}
+                refreshing={ this.props.refreshing }
             />
         </View>
     );
@@ -40,7 +47,8 @@ class FavoritesScreen extends Component {
 }
 
 const mapStateToProps = ({ favorites }) => ({
-  favList: favorites.favList,
+    favList: favorites.favList,
+    refreshing: favorites.refreshing,
 });
 
 const mapDispatchToProps = dispatch => ({

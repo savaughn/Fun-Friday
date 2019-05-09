@@ -8,8 +8,6 @@ import Footer from "../../components/Footer/footer";
 class HomeScreen extends Component {
     constructor(props) {
         super(props);
-        console.log('current', this.props.favArray);
-        console.log('past', this.props.favList);
     }
 
     render() {

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { FlatList, TouchableOpacity, Text, View } from 'react-native';
+import {connect} from 'react-redux';
 import { refreshScreen } from '../../navigator/navigateTo';
 import { REMOVE_FROM_FAVORITES } from '../../state/ActionTypes';
-import {connect} from "react-redux";
-
 
 class FavoritesList extends Component {
 
@@ -31,7 +30,7 @@ class FavoritesList extends Component {
                     data={this.props.favorites}
                     keyExtractor={this.keyExtractor}
                     renderItem={ this.renderItem }
-                    onRefresh={() => refreshScreen()}
+                    onRefresh={() => refreshScreen(this.props.favorites)}
                     refreshing={this.props.refreshing}
                 />
             }

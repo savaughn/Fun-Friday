@@ -12,57 +12,70 @@ import {
     SAVE_TO_FAVORITES_LIST,
     SAVE_TO_FAVORITES_LIST_SUCCESS,
     SAVE_TO_FAVORITES_LIST_FAILURE,
+    REMOVE_FROM_FAVORITES_LIST,
+    REMOVE_FROM_FAVORITES_LIST_SUCCESS,
 } from '../../ActionTypes';
 
 function* sagaWatcher() {
   yield takeLatest(SAVE_TO_FAVORITES, saveItem);
-  yield takeLatest(REMOVE_FROM_FAVORITES, deleteItem);
   yield takeLatest(SAVE_TO_FAVORITES_LIST, saveItem);
+  yield takeLatest(REMOVE_FROM_FAVORITES, deleteItem);
+  yield takeLatest(REMOVE_FROM_FAVORITES_LIST, deleteItem);
 }
 
-function* deleteItem({ payload, type }) {
+function* deleteItem(action) {
     try {
-        const favArray = yield call(removeItemFromArray, payload);
-        yield storeData(type, favArray);
-        yield put({ type: REMOVE_FROM_FAVORITES_SUCCESS, favArray});
+        const newArray = yield call(removeItemFromArray, action);
+        yield asyncData(action.type, newArray, 'delete');
+        if (action.payload.type === 'remove_from_favorites_list') {
+            yield put({ type: REMOVE_FROM_FAVORITES_LIST_SUCCESS, favList: newArray});
+        } else {
+            yield put({type: REMOVE_FROM_FAVORITES_SUCCESS, favArray: newArray});
+        }
     } catch (err) {
         yield put({ type: REMOVE_FROM_FAVORITES_FAILURE });
     }
 }
 
-storeData = async (type, data) => {
-    const key = type === 'save_to_favorites_list' ? 'favList' : 'favorites';
+asyncData = async (type, data, operation) => {
+    let key;
+    if (operation === 'delete'){
+        key = type === 'remove_to_favorites_list' ? 'favList' : 'favorites';
+    } else {
+        key = type === 'save_to_favorites_list' ? 'favList' : 'favorites';
+    }
     try {
         await AsyncStorage.setItem(key, JSON.stringify(data));
     } catch (error) {
+        console.log(error);
         // Error saving data
     }
 };
 
-function removeItemFromArray(payload) {
-    _.remove(payload.favArray, function(itemInArray) {
-        return itemInArray === payload.item;
+function removeItemFromArray(action) {
+    const array = action.type === "remove_from_favorites_list" ? action.payload.favList : action.payload.favArray;
+    console.log(array);
+    _.remove(array, function(itemInArray) {
+        return itemInArray === action.payload.item;
     });
-    return payload.favArray;
+    return array;
 }
 
 function* saveItem({ payload, type }) {
     if (type === 'save_to_favorites_list') {
         try {
             const favList = yield call(saveListToArray, payload);
-            console.log('after save', favList);
             yield put({ type: SAVE_TO_FAVORITES_LIST_SUCCESS, favList });
-            yield storeData(type, favList);
+            yield asyncData(type, favList, 'save');
         } catch (err) {
             console.log(err);
             yield put({ type: SAVE_TO_FAVORITES_LIST_FAILURE });
         }
     } else {
         try {
-            console.log('ethnhn', payload);
             const favArray = yield call(saveItemToArray, payload);
             yield put({ type: SAVE_TO_FAVORITES_SUCCESS, favArray });
-            yield storeData(type, favArray)
+            yield asyncData(type, favArray, 'save');
         } catch (err) {
             yield put({ type: SAVE_TO_FAVORITES_FAILURE });
         }
@@ -97,14 +110,12 @@ function saveItemToArray(payload) {
 }
 
 function saveListToArray(payload) {
-    console.log('in save', payload);
     const date = new Date();
     payload.favList.push({
         id: Date.now(),
         date: date.toDateString(),
         list: payload.favArray,
     });
-    console.log('end save', payload);
     return payload.favList;
 }
 

@@ -16,7 +16,7 @@ class Footer extends Component {
                                 type: SAVE_TO_FAVORITES_LIST,
                                 payload: { favList: this.props.favList, favArray: this.props.favArray },
                             });
-                        } }
+                        }}
                     >
                         <Text style={styles.items}>Save Favorites List</Text>
                     </TouchableOpacity>
